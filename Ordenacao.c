@@ -36,56 +36,88 @@ void PrintVet(int *vet, int tamanho){
     int i=0;
     while (i<tamanho)
     {
-        printf("%i",vet[i]);
+        printf("| %i |",vet[i]);
         i++;
     }
     printf("\n");
 }
 
-void SelectionSort(int *vet, int tamanho){
-    int min;
-    for(int j=0;j < tamanho-1;j++){
+void showSelectionSortInfo() {
+    clearScreen();
+    printf("Você escolheu Selection Sort.\n\n");
+    delay(1);
+    printf("Esse algoritmo percorre o vetor repetidamente, procurando\n");
+    delay(1);
+    printf("o menor elemento e o trocando com o de menor posição possível.\n");
+    delay(1);
+    printf("Complexidade: O(n^2) no pior e melhor caso,\npois o algoritmo sempre faz o mesmo número de comparações\nindependentemente da ordem inicial dos elementos.\n");
+    delay(1);
+    printf("Estável: Não, pois ao fazer a troca de elementos iguais, a ordem relativa pode ser alterada.\n");
+    delay(1);
+    printf("In-place: Sim, pois não requer espaço extra proporcional ao tamanho do vetor.\n");
+    delay(1);
+}
+
+void SelectionSort(int *vet, int tamanho) {
+    int min, temp;
+    printf("\nVamos ordenar o vetor!\n");
+    delay(1);
+    
+    for (int j = 0; j < tamanho - 1; j++) {
         min = j;
-        for(int i = j+1; i < tamanho;i++){
-            if(vet[min]>vet[i]){
+        printf("\nNa posição %i temos o valor %i\n", j, vet[j]);
+        
+        for (int i = j + 1; i < tamanho; i++) {
+            printf("\nO elemento %i é maior que %i? ", vet[min], vet[i]);
+            delay(1);
+            if (vet[min] > vet[i]) {
+                printf("SIM\n");
+                printf("O menor elemento está na posição %i. Vamos trocar!\n", i);
                 min = i;
+            } else {
+                printf("Não\n");
             }
         }
-        int temp = vet[min];
+
+        delay(1);
+        printf("\nVamos salvar o menor elemento encontrado na posição %i com valor %i\n", min, vet[min]);
+        temp = vet[min];
+        printf("Vamos trocar o elemento na posição %i com o menor elemento.\n", j);
         vet[min] = vet[j];
         vet[j] = temp;
+        
+        printf("Como está o vetor até agora: ");
+        PrintVet(vet, tamanho);
+        delay(2); // Adiciona um pequeno delay entre as trocas
     }
 }
 
 int main() {
     int opcao;
+    int vet[5] = {7,8,2,1,5};
+    int tamanhoVet = 5;
     do {
         displayMenu();
         scanf("%d", &opcao);
-        
+        int OK_FLAG = 0;
         switch(opcao) {
             case 1:
                 clearScreen();
-                printf("Você escolheu Selection Sort.\n\n");
+                
+                showSelectionSortInfo();
+    
+                printf("\nVetor original: ");
+                PrintVet(vet, tamanhoVet);
+
+                printf("\nIniciando a ordenação...\n");
                 delay(1);
-                printf("Esse algoritmo percorre o vetor repetidamente, procurando\n");
-                delay(1);
-                printf("o menor elemento e o trocando com o de menor posição possível\n");
-                delay(1);
-                printf("Complexidade: O(n^2) no pior e melhor caso,\npois o algoritmo sempre faz o mesmo número de comparações\nindependentemente da ordem inicial dos elementos..\n");
-                delay(1);
-                printf("Estável: Não, pois ao fazer a troca de elementos iguais, a ordem relativa pode ser alterada.\n");
-                delay(1);
-                printf("In-place: Sim, pois não requer espaço extra proporcional ao tamanho do vetor.\n");
-                delay(1);
-                int vet[5] = {7,8,2,1,5};
-                int tamanhoVet = 5;
-                int opcao;
-                PrintVet(vet,tamanhoVet);
-                SelectionSort(vet,tamanhoVet);
-                PrintVet(vet,tamanhoVet);
-                delay(5);
-                clearScreen();
+                SelectionSort(vet, tamanhoVet);
+                printf("\nVetor ordenado: ");
+                PrintVet(vet, tamanhoVet);
+
+                printf("\n\nQuando tiver lido tudo aperte 1 para continuar!");
+                scanf("%d",&OK_FLAG);
+                if (OK_FLAG == 1) clearScreen();
                 break;
             case 2:
                 printf("Você escolheu Insertion Sort.\n");
